@@ -1,3 +1,5 @@
+import userData from '../fixtures/userData.json'
+
 const { log } = require("async")
 
 describe('Orange HRM Tests', () => {
@@ -12,29 +14,19 @@ describe('Orange HRM Tests', () => {
 
   }
 
-  const userData = {
-    username: 'Admin',
-    password: 'admin123'
-  },
-
-   userFailureData = {
-    username: 'teste',
-        password: 'teste'
-   }
-
-
+ 
   it('Login Success', () => {
     cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
-    cy.get(selectorsList.username).type(userData.username)
-    cy.get(selectorsList.password).type(userData.password)
+    cy.get(selectorsList.username).type(userData.userSucess.username)
+    cy.get(selectorsList.password).type(userData.userSucess.password)
     cy.get(selectorsList.loginButton).click()
     cy.location('pathname').should('eq', '/web/index.php/dashboard/index')
     cy.get(selectorsList.dashboardGrid)
   })
   it ('Login - Failure', () => {
     cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
-    cy.get(selectorsList.username).type(userFailureData.username)
-    cy.get(selectorsList.password).type(userFailureData.password)
+    cy.get(selectorsList.username).type(userData.userFailureData.username)
+    cy.get(selectorsList.password).type(userData.userFailureData.password)
     cy.get(selectorsList.loginButton).click()
     cy.get(selectorsList.alertContent)
   
